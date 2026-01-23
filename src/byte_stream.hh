@@ -1,5 +1,6 @@
 #pragma once
 
+#include <deque>
 #include <cstdint>
 #include <string>
 #include <string_view>
@@ -22,9 +23,15 @@ public:
   bool has_error() const { return error_; }; // Has the stream had an error?
 
 protected:
-  // Please add any additional state to the ByteStream here, and not to the Writer and Reader interfaces.
   uint64_t capacity_;
-  bool error_ {};
+  bool error_ {false};
+
+  std::deque<std::string> buffer_ {};
+  uint64_t removed_on_front_ {0};
+  bool is_closed_ {false};
+  uint64_t bytes_buffered_ {0};
+  uint64_t bytes_pushed_ {0};
+  uint64_t bytes_popped_ {0};
 };
 
 class Writer : public ByteStream
