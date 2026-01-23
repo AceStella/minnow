@@ -1,33 +1,35 @@
 Checkpoint 0 Writeup
 ====================
 
-My name: [your name here]
+My name: Ace
 
-My SUNet ID: [your sunetid here]
+My SUNet ID: None
 
-I collaborated with: [list sunetids here]
+I collaborated with: Gemini
 
-I would like to credit/thank these classmates for their help: [list sunetids here]
+I would like to credit/thank these classmates for their help: Gemini
 
-This lab took me about [n] hours to do. I [did/did not] attend the lab session.
+This lab took me about 12 hours to do. I did not attend the lab session.
 
-My secret code from section 2.1 was: [code here]
+My secret code from section 2.1 was: 540368
 
-I was surprised by or edified to learn that: [describe]
+I was surprised by or edified to learn that: I can use deque of string to save data.
 
-Describe ByteStream implementation. [Describe data structures and
-approach taken. Describe alternative designs considered or tested.
-Describe benefits and weaknesses of your design compared with
-alternatives -- perhaps in terms of simplicity/complexity, risk of
-bugs, asymptotic performance, empirical performance, required
-implementation time and difficulty, and other factors. Include any
-measurements if applicable.]
+Describe ByteStream implementation. I use deque of string to save data.
+If just use deque of char, its easy to implement, but may only peek one bit frequently. Use deque of string can peek the remain part of string one time.
+At first I used is_closed() function in Reader, but got error when compile. And I fogot to add deque head file.
+As for asymptotic performance, push O(1), pop O(1), peek O(1), space O(N).
+ByteStream throughput (pop length 4096):  3.97 Gbit/s
+  ByteStream throughput (pop length 128):   2.92 Gbit/s
+  ByteStream throughput (pop length 32):    2.18 Gbit/s
+Implementation Time: about 5h, and Difficulty, mid.
+Other measurement: safety, use string view to make sure read only.
 
 Implementation Challenges:
-[]
+The pop and push logic with deque of string.
 
 Remaining Bugs:
-[]
+None for now.
 
 - If applicable: I received help from a former student in this class,
   another expert, or a chatbot or other AI system (e.g. ChatGPT,

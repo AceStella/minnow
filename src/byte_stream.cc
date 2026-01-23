@@ -17,7 +17,7 @@ void Writer::push( string data )
     return;
   }
 
-  if ( data.size() > can_write ){
+  if ( data.size() > can_write ) {
     data.resize( can_write );
   }
 
@@ -61,13 +61,14 @@ string_view Reader::peek() const
     return {};
   }
 
-  return string_view ( buffer_.front() ).substr( removed_on_front_ );
+  return string_view( buffer_.front() ).substr( removed_on_front_ );
 }
 
 // Remove `len` bytes from the buffer.
 void Reader::pop( uint64_t len )
 {
-  if ( len == 0 || error_ ) return;
+  if ( len == 0 || error_ )
+    return;
   uint64_t actual_pop_len = std::min( len, bytes_buffered_ );
 
   bytes_popped_ += actual_pop_len;
@@ -76,7 +77,7 @@ void Reader::pop( uint64_t len )
   while ( actual_pop_len > 0 ) {
     uint64_t current_block_len = buffer_.front().size() - removed_on_front_;
 
-    if ( actual_pop_len < current_block_len) {
+    if ( actual_pop_len < current_block_len ) {
       removed_on_front_ += actual_pop_len;
       break;
     } else {
@@ -90,7 +91,7 @@ void Reader::pop( uint64_t len )
 // Is the stream finished (closed and fully popped)?
 bool Reader::is_finished() const
 {
-  return is_closed_ && (bytes_buffered_ == 0);
+  return is_closed_ && ( bytes_buffered_ == 0 );
 }
 
 // Number of bytes currently buffered (pushed and not popped)
