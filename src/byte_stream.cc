@@ -12,7 +12,7 @@ void Writer::push( string data )
     return;
   }
 
-  uint64_t can_write = available_capacity();
+  const uint64_t can_write = available_capacity();
   if ( can_write == 0 ) {
     return;
   }
@@ -21,7 +21,7 @@ void Writer::push( string data )
     data.resize( can_write );
   }
 
-  uint64_t write_len = data.size();
+  const uint64_t write_len = data.size();
   bytes_pushed_ += write_len;
   bytes_buffered_ += write_len;
   buffer_.push_back( std::move( data ) );
@@ -67,24 +67,25 @@ string_view Reader::peek() const
 // Remove `len` bytes from the buffer.
 void Reader::pop( uint64_t len )
 {
-  if ( len == 0 || error_ )
+  if ( len == 0 || error_ ) {
     return;
+  }
   uint64_t actual_pop_len = std::min( len, bytes_buffered_ );
 
   bytes_popped_ += actual_pop_len;
   bytes_buffered_ -= actual_pop_len;
 
   while ( actual_pop_len > 0 ) {
-    uint64_t current_block_len = buffer_.front().size() - removed_on_front_;
+    const uint64_t current_block_len = buffer_.front().size() - removed_on_front_;
 
     if ( actual_pop_len < current_block_len ) {
       removed_on_front_ += actual_pop_len;
       break;
-    } else {
-      actual_pop_len -= current_block_len;
-      buffer_.pop_front();
-      removed_on_front_ = 0;
     }
+    
+    actual_pop_len -= current_block_len;
+    buffer_.pop_front();
+    removed_on_front_ = 0;
   }
 }
 
