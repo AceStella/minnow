@@ -82,7 +82,6 @@ void Reader::pop( uint64_t len )
       removed_on_front_ += actual_pop_len;
       break;
     }
-
     actual_pop_len -= current_block_len;
     buffer_.pop_front();
     removed_on_front_ = 0;

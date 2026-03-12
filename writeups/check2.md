@@ -1,29 +1,25 @@
 Checkpoint 2 Writeup
 ====================
 
-My name: [your name here]
+My name: Ace
 
-My SUNet ID: [your sunetid here]
+My SUNet ID: None
 
-I collaborated with: [list sunetids here]
+I collaborated with: Gemino
 
-I would like to thank/reward these classmates for their help: [list sunetids here]
+I would like to thank/reward these classmates for their help: Gemini
 
-This lab took me about [n] hours to do. I [did/did not] attend the lab session.
+This lab took me about 4 hours to do. I did not attend the lab session.
 
-Describe Wrap32 and TCPReceiver structure and design. [Describe data
-structures and approach taken. Describe alternative designs considered
-or tested.  Describe benefits and weaknesses of your design compared
-with alternatives -- perhaps in terms of simplicity/complexity, risk
-of bugs, asymptotic performance, empirical performance, required
-implementation time and difficulty, and other factors. Include any
-measurements if applicable.]
+Describe Wrap32 and TCPReceiver structure and design. 
+
+
 
 Implementation Challenges:
 []
 
 Remaining Bugs:
-[]
+None
 
 - If applicable: I received help from a former student in this class,
   another expert, or a chatbot or other AI system (e.g. ChatGPT,
