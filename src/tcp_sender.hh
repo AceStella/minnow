@@ -4,7 +4,9 @@
 #include "tcp_receiver_message.hh"
 #include "tcp_sender_message.hh"
 
+#include <algorithm>
 #include <functional>
+#include <queue>
 
 class TCPSender
 {
@@ -42,4 +44,13 @@ private:
   ByteStream input_;
   Wrap32 isn_;
   uint64_t initial_RTO_ms_;
+  uint64_t next_seqno_ { 0 };
+  uint16_t window_size_ { 1 };
+  uint64_t link_bytes_ { 0 };
+  bool fin_sent_ { false };
+  std::queue<TCPSenderMessage> link_messages_ {};
+  uint64_t current_RTO_ms_ { initial_RTO_ms_ };
+  uint64_t time_passed_ { 0 };
+  bool timer_running_ { false };
+  uint64_t consecutive_retransmissions_ { 0 };
 };
