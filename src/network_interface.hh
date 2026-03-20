@@ -6,28 +6,12 @@
 
 #include <memory>
 #include <queue>
+#include <unordered_map>
+#include <vector>
 
 // A "network interface" that connects IP (the internet layer, or network layer)
 // with Ethernet (the network access layer, or link layer).
 
-// This module is the lowest layer of a TCP/IP stack
-// (connecting IP with the lower-layer network protocol,
-// e.g. Ethernet). But the same module is also used repeatedly
-// as part of a router: a router generally has many network
-// interfaces, and the router's job is to route Internet datagrams
-// between the different interfaces.
-
-// The network interface translates datagrams (coming from the
-// "customer," e.g. a TCP/IP stack or router) into Ethernet
-// frames. To fill in the Ethernet destination address, it looks up
-// the Ethernet address of the next IP hop of each datagram, making
-// requests with the [Address Resolution Protocol](\ref rfc::rfc826).
-// In the opposite direction, the network interface accepts Ethernet
-// frames, checks if they are intended for it, and if so, processes
-// the the payload depending on its type. If it's an IPv4 datagram,
-// the network interface passes it up the stack. If it's an ARP
-// request or reply, the network interface processes the frame
-// and learns or replies as necessary.
 class NetworkInterface
 {
 public:
@@ -82,4 +66,20 @@ private:
 
   // Datagrams that have been received
   std::queue<InternetDatagram> datagrams_received_ {};
+
+  // ARP 缓存条目结构
+  struct ARPCacheEntry
+  {
+    EthernetAddress mac;
+    size_t time_to_live;
+  };
+
+  // IP 地址到 MAC 地址的 ARP 缓存表 (有效时间 30 秒)
+  std::unordered_map<uint32_t, ARPCacheEntry> arp_cache_ {};
+
+  // 记录发送过 ARP 请求的 IP 及其已等待的时间 (5秒内不重复发送)
+  std::unordered_map<uint32_t, size_t> arp_requests_timer_ {};
+
+  // 等待 MAC 地址解析的 IP 数据报队列
+  std::unordered_map<uint32_t, std::vector<InternetDatagram>> waiting_dgrams_ {};
 };

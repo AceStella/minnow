@@ -32,7 +32,7 @@ void TCPSender::push( const TransmitFunction& transmit )
     }
 
     const size_t window_space = current_window - link_bytes_;
-    const size_t payload_limit = min( TCPConfig::MAX_PAYLOAD_SIZE, window_space - (msg.SYN ? 1 : 0) );
+    const size_t payload_limit = min( TCPConfig::MAX_PAYLOAD_SIZE, window_space - ( msg.SYN ? 1 : 0 ) );
 
     read( reader(), payload_limit, msg.payload );
 
